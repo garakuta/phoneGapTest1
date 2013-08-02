@@ -70,21 +70,13 @@ function createMap(position) {
     
     // 地図オプションの指定
     var myOptions = {
-            zoom: 14,
+            zoom: 16,
             center: new google.maps.LatLng( 35.681004, 139.766543 ),
-            //center: latlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
     // 地図を取得
     var map = new google.maps.Map(document.getElementById("mapCanvas"),
                                   myOptions);
-    // マーカーを設定
-    /*
-    var marker = new google.maps.Marker({
-            position: latlng, 
-            map: map
-        });
-    */
     
     //XML情報からのマーカー追加
     //var dt = "あらーと";
