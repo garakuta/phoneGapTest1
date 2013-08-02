@@ -84,10 +84,11 @@ function createMap(position) {
         dt += $(this).find('lat').text()+":"+$(this).find('lng').text()+"////";
         //$("#debugText").text( dt );
         
-        //var latlng = new google.maps.LatLng( $(this).find('lat').text(), $(this).find('lng').text() );
-        //var marker = new google.maps.Marker( { position:latlng, map:map } );
+        var latlng = new google.maps.LatLng( $(this).find('lat').text(), $(this).find('lng').text() );
+        var marker = new google.maps.Marker( { position:latlng, map:map } );
     });
-    $("#debugText").text( dt );
+    alert( dt );
+    $("#debugText").text( "abs..." );
 }
 
 
