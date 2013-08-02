@@ -66,8 +66,8 @@ function onError(error) {
 // Google Mapsで現在地の地図を描画
 function createMap(position) {
     // 緯度経度を取得
-    var latlng = new google.maps.LatLng(position.coords.latitude,
-                                        position.coords.longitude);
+    //var latlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+    
     // 地図オプションの指定
     var myOptions = {
             zoom: 14,
@@ -103,7 +103,7 @@ function createMap(position) {
         
         infowindowArr.push( new google.maps.InfoWindow({ content: $(pointArr[i]).find('name').text(), position:latlng }) );
         
-        //attachMessage(marker);
+        attachMessage(marker);
         
     //});
     }
