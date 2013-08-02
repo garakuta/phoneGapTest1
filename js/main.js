@@ -91,8 +91,23 @@ function createMap(position) {
         var latlng = new google.maps.LatLng( $(this).find('lat').text(), $(this).find('lng').text() );
         var marker = new google.maps.Marker( { position:latlng, map:map } );
         
-        //alert( dt );
+        new google.maps.InfoWindow({
+            content: $(this).find('name').text()
+        }).open(marker.getMap(), marker);
+        
+        /*
+        map.event.addListener(marker, 'click', function(event) {
+            new google.maps.InfoWindow({
+                content: $(this).find('name').text()
+            }).open(marker.getMap(), marker);
+        });
+        */
     });
+    
+    
+    
+    
+    
     
     
     //$("#debugText").text( "abs..." );
