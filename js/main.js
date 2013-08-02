@@ -103,7 +103,7 @@ function createMap(position) {
         
         infowindowArr.push( new google.maps.InfoWindow({ content: $(pointArr[i]).find('name').text(), position:latlng }) );
         
-        attachMessage(marker);
+        //attachMessage(marker);
         
     //});
     }
