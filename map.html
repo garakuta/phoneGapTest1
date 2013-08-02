@@ -3,8 +3,7 @@
 	<head>
     	<title>PhoneGapによる位置情報の利用</title>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, 
-        							   maximum-scale=1.0, user-scalable=no;" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
     	<meta charset="utf-8">
 		<style type="text/css">
   			html { height: 100% }
@@ -13,11 +12,8 @@
 		</style>
 
 	    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
- 		<script type="text/javascript"
-    		src="http://maps.google.com/maps/api/js?sensor=false">
-		</script>
+ 		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     	<script type="text/javascript">
-		
         function onBodyLoad()
         {       
             document.addEventListener("deviceready", onDeviceReady, false);
@@ -49,8 +45,8 @@
 			var latlng = new google.maps.LatLng(position.coords.latitude, 
 												position.coords.longitude);
 			// 地図オプションの指定
-    		var myOptions = {
-      				zoom: 14,
+			var myOptions = {
+					zoom: 14,
       				center: latlng,
       				mapTypeId: google.maps.MapTypeId.ROADMAP
     			};
@@ -63,12 +59,11 @@
       				map: map
 	  			});   
   		}
-
 		</script>
 	</head>
 
 	<body onload="onBodyLoad()">
-	    <h1>現在地を地図上に表示</h1>
+	    <!--<h1>現在地を地図上に表示</h1>-->
         
 		<div id="mapCanvas" style="width:100%; height:100%"></div>
         
