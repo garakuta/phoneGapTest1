@@ -81,7 +81,7 @@ function createMap(position) {
     //XML情報からのマーカー追加
     var dt = "あらーと";
     
-    $(xml).find('point').each(function(i){
+    $(xml).find('point').each(function(){
         //dt += $(this).find('lat').text()+":"+$(this).find('lng').text()+"////";
         //$("#debugText").text( dt );
         
