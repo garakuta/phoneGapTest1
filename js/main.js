@@ -79,10 +79,15 @@ function createMap(position) {
         });
     
     //XML情報からのマーカー追加
+    var dt = "";
     $(xml).find('point').each(function(i){
-        var latlng = new google.maps.LatLng( $(this).find('lat').text(), $(this).find('lng').text() );
-        var marker = new google.maps.Marker( { position:latlng, map:map } );
+        dt += $(this).find('lat').text()+":"+$(this).find('lng').text()+"////";
+        //$("#debugText").text( dt );
+        
+        //var latlng = new google.maps.LatLng( $(this).find('lat').text(), $(this).find('lng').text() );
+        //var marker = new google.maps.Marker( { position:latlng, map:map } );
     });
+    $("#debugText").text( dt );
 }
 
 
