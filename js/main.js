@@ -4,8 +4,39 @@ function onBodyLoad()
 }
 function onDeviceReady()
 {
+    //設定済みの位置情報XML読み込みへ
+    getSetPlace();
+    
+    //getGeolocation();
+}
+
+// -------------------------------------------------  
+// XMLデータを取得  
+// -------------------------------------------------  
+
+// 設定済み位置情報の取得
+function getSetPlace()
+{
+    $.ajax({  
+        url:'point.xml',
+        type:'get',
+        dataType:'xml',
+        timeout:1000,
+        success:parse_xml
+    });
+}
+
+function parse_xml(xml,status){  
+    if(status!='success')return;
+    //$(xml).find('point').each(disp);
+    
+    //デバイス情報取得へ
     getGeolocation();
 }
+
+// -------------------------------------------------  
+// DEVICE情報  
+// ------------------------------------------------- 
 
 // 位置情報の取得
 function getGeolocation() {
@@ -22,6 +53,10 @@ function onError(error) {
     alert('コード: '        + error.code    + '\n' +
           'メッセージ: '    + error.message + '\n');
 }
+
+// -------------------------------------------------  
+// Google Maps 
+// ------------------------------------------------- 
 
 // Google Mapsで現在地の地図を描画
 function createMap(position) {
@@ -41,5 +76,30 @@ function createMap(position) {
     var marker = new google.maps.Marker({
             position: latlng, 
             map: map
-        });   
+        });
+    
+    //XML情報からのマーカー追加
+    $(xml).find('point').each(function(i){
+        var latlng = new google.maps.LatLng( $(this).find('lat').text(), $(this).find('lng').text() );
+        var marker = new google.maps.Marker( { position:latlng, map:map } );
+    });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

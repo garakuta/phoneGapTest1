@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<info>
+    <point>
+        <name>東京駅</name>
+        <lat>35.681004</lat>
+        <lng>139.766543</lng>
+    </point>
+    <point>
+        <name>東京中央郵便局</name>
+        <lat>35.67974</lat>
+        <lng>139.765019</lng>
+    </point>
+    <point>
+        <name>日本生命丸の内ビル</name>
+        <lat>35.683209</lat>
+        <lng>139.765749</lng>
+    </point>
+</info>
