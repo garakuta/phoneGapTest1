@@ -79,7 +79,8 @@ function createMap(position) {
         });
     
     //XML情報からのマーカー追加
-    var dt = "";
+    var dt = "あらーと";
+    /*
     $(xml).find('point').each(function(i){
         dt += $(this).find('lat').text()+":"+$(this).find('lng').text()+"////";
         //$("#debugText").text( dt );
@@ -87,6 +88,7 @@ function createMap(position) {
         var latlng = new google.maps.LatLng( $(this).find('lat').text(), $(this).find('lng').text() );
         var marker = new google.maps.Marker( { position:latlng, map:map } );
     });
+    */
     alert( dt );
     $("#debugText").text( "abs..." );
 }
