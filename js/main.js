@@ -63,6 +63,9 @@ function onError(error) {
 // Google Maps 
 // ------------------------------------------------- 
 
+var markerArr = [];
+var infowindowArr = [];
+
 // Google Mapsで現在地の地図を描画
 function createMap(position) {
     // 緯度経度を取得
