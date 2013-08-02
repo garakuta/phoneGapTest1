@@ -27,10 +27,12 @@ function getSetPlace()
 }
 
 var pointXML;
+var pointArr;
 function parse_xml(xml,status){  
     if(status!='success')return;
     
     pointXML = xml;
+    pointArr = $(xml).find('point');
     //$(xml).find('point').each(disp);
     
     //デバイス情報取得へ
@@ -69,51 +71,78 @@ function createMap(position) {
     // 地図オプションの指定
     var myOptions = {
             zoom: 14,
-            center: latlng,
+            center: new google.maps.LatLng( 35.681004, 139.766543 ),
+            //center: latlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
     // 地図を取得
     var map = new google.maps.Map(document.getElementById("mapCanvas"),
                                   myOptions);
     // マーカーを設定
+    /*
     var marker = new google.maps.Marker({
             position: latlng, 
             map: map
         });
+    */
     
     //XML情報からのマーカー追加
     //var dt = "あらーと";
     
-    $(pointXML).find('point').each(function(){
+    for( var i=0; i<pointArr.length; i++ )
+    {
+    //$(pointXML).find('point').each(function(){
         //dt += $(this).find('lat').text()+":"+$(this).find('lng').text()+"////";
         //$("#debugText").text( dt );
         
-        var latlng = new google.maps.LatLng( $(this).find('lat').text(), $(this).find('lng').text() );
+        //alert();
+        
+        var latlng = new google.maps.LatLng( $(pointArr[i]).find('lat').text(), $(pointArr[i]).find('lng').text() );
         var marker = new google.maps.Marker( { position:latlng, map:map } );
+        markerArr.push( marker );
         
-        new google.maps.InfoWindow({
-            content: $(this).find('name').text()
-        }).open(marker.getMap(), marker);
+        infowindowArr.push( new google.maps.InfoWindow({ content: $(pointArr[i]).find('name').text(), position:latlng }) );
         
-        /*
-        map.event.addListener(marker, 'click', function(event) {
-            new google.maps.InfoWindow({
-                content: $(this).find('name').text()
-            }).open(marker.getMap(), marker);
-        });
-        */
-    });
-    
-    
-    
-    
-    
-    
-    
-    //$("#debugText").text( "abs..." );
+        attachMessage(marker);
+        
+    //});
+    }
 }
 
+var activeWindow;
+var activeWindowMarker;
+var activeWindowNum;
 
+function attachMessage(marker) {
+    
+    //if( activeWindow )activeWindow.close(activeWindowMarker.getMap(), activeWindowMarker);
+    
+    var i;
+    
+    //WINDOW CLOSE
+    /*
+    for( i=0; i<infowindowArr.length; i++ )
+    {
+        infowindowArr[i].close(markerArr[i].getMap(), markerArr[i]);
+    }
+    */
+    
+    activeWindowMarker = marker;
+    google.maps.event.addListener(marker, 'click',  function(event) {
+                                                        
+                                                        for( i=0; i<markerArr.length; i++ )
+                                                        {
+                                                            if( marker == markerArr[i] )
+                                                            {
+                                                                activeWindowNum = i;
+                                                            }
+                                                        }
+                                                        
+                                                        //WINDOW OPEN
+                                                        activeWindow = infowindowArr[activeWindowNum];
+                                                        infowindowArr[activeWindowNum].open(markerArr[activeWindowNum].getMap(), markerArr[activeWindowNum]);
+                                                    });
+}
 
 
 
