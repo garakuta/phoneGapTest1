@@ -26,8 +26,11 @@ function getSetPlace()
     });
 }
 
+var pointXML;
 function parse_xml(xml,status){  
     if(status!='success')return;
+    
+    pointXML = xml;
     //$(xml).find('point').each(disp);
     
     //デバイス情報取得へ
@@ -81,7 +84,7 @@ function createMap(position) {
     //XML情報からのマーカー追加
     var dt = "あらーと";
     
-    $(xml).find('point').each(function(){
+    $(pointXML).find('point').each(function(){
         //dt += $(this).find('lat').text()+":"+$(this).find('lng').text()+"////";
         //$("#debugText").text( dt );
         
