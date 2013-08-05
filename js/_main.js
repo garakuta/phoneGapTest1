@@ -1,15 +1,14 @@
 function onBodyLoad()
 {       
-    //マップの高さ調整へ
-    mapHeightAdjust();
-    
+    document.addEventListener("deviceready", onDeviceReady, false);
+}
+function onDeviceReady()
+{
     //設定済みの位置情報XML読み込みへ
     getSetPlace();
+    
+    //getGeolocation();
 }
-
-$(window).resize(function() {
-    mapHeightAdjust();
-});
 
 // -------------------------------------------------  
 // XMLデータを取得  
@@ -17,7 +16,7 @@ $(window).resize(function() {
 
 // 設定済み位置情報の取得
 function getSetPlace()
-{   
+{
     $.ajax({  
         url:'point.xml',
         type:'get',
@@ -29,15 +28,35 @@ function getSetPlace()
 
 var pointXML;
 var pointArr;
-
 function parse_xml(xml,status){  
     if(status!='success')return;
     
     pointXML = xml;
     pointArr = $(xml).find('point');
+    //$(xml).find('point').each(disp);
     
-    //地図作成へ
-    createMap();
+    //デバイス情報取得へ
+    getGeolocation();
+}
+
+// -------------------------------------------------  
+// DEVICE情報  
+// ------------------------------------------------- 
+
+// 位置情報の取得
+function getGeolocation() {
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+}
+
+// 位置情報の取得成功時のコールバック関数
+function onSuccess(position) {
+    createMap(position);
+}
+
+// エラー時のコールバック関数
+function onError(error) {
+    alert('コード: '        + error.code    + '\n' +
+          'メッセージ: '    + error.message + '\n');
 }
 
 // -------------------------------------------------
@@ -47,15 +66,10 @@ function parse_xml(xml,status){
 var markerArr = [];
 var infowindowArr = [];
 
-//地図の高さ調整
-function mapHeightAdjust()
-{
-    var setH = $(window).height()-50;
-    $('#mapCanvas').css( "height", setH+"px" );
-}
-
 // Google Mapsで現在地の地図を描画
-function createMap() {
+function createMap(position) {
+    // 緯度経度を取得
+    //var latlng = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
     
     // 地図オプションの指定
     var myOptions = {
@@ -64,10 +78,20 @@ function createMap() {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
     // 地図を取得
-    var map = new google.maps.Map( $('#mapCanvas')[0], myOptions );
+    var map = new google.maps.Map(document.getElementById("mapCanvas"),
+                                  myOptions);
+    
+    //XML情報からのマーカー追加
+    //var dt = "あらーと";
     
     for( var i=0; i<pointArr.length; i++ )
-    {   
+    {
+    //$(pointXML).find('point').each(function(){
+        //dt += $(this).find('lat').text()+":"+$(this).find('lng').text()+"////";
+        //$("#debugText").text( dt );
+        
+        //alert();
+        
         var latlng = new google.maps.LatLng( $(pointArr[i]).find('lat').text(), $(pointArr[i]).find('lng').text() );
         var marker = new google.maps.Marker( { position:latlng, map:map } );
         markerArr.push( marker );
@@ -75,6 +99,8 @@ function createMap() {
         infowindowArr.push( new google.maps.InfoWindow({ content: $(pointArr[i]).find('name').text(), position:latlng }) );
         
         attachMessage(marker);
+        
+    //});
     }
 }
 
@@ -82,9 +108,19 @@ var activeWindow;
 var activeWindowMarker;
 var activeWindowNum;
 
-function attachMessage(marker)
-{
+function attachMessage(marker) {
+    
+    //if( activeWindow )activeWindow.close(activeWindowMarker.getMap(), activeWindowMarker);
+    
     var i;
+    
+    //WINDOW CLOSE
+    /*
+    for( i=0; i<infowindowArr.length; i++ )
+    {
+        infowindowArr[i].close(markerArr[i].getMap(), markerArr[i]);
+    }
+    */
     
     activeWindowMarker = marker;
     google.maps.event.addListener(marker, 'click',  function(event) {
